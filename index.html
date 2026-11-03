@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>道路施工协议</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #e9ecef;
+  }
+
+  body {
+    font-family: "宋体", SimSun, "Microsoft YaHei", serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ 顶部工具栏 ============ */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #d0d7de;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+  }
+
+  .toolbar button {
+    font-family: inherit;
+    font-size: 14px;
+    padding: 9px 20px;
+    border-radius: 6px;
+    border: 1px solid #1a73e8;
+    background: #1a73e8;
+    color: #fff;
+    cursor: pointer;
+    transition: .2s;
+  }
+
+  .toolbar button:hover {
+    background: #1558b0;
+    border-color: #1558b0;
+  }
+
+  .toolbar button.ghost {
+    background: #fff;
+    color: #1a73e8;
+  }
+
+  .toolbar button.ghost:hover {
+    background: #eaf1fd;
+  }
+
+  .toolbar .tip {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  /* ============ A4 纸张 ============ */
+  .page-wrap {
+    padding: 28px 12px 48px;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 22mm 24mm;
+    margin: 0 auto;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .13);
+    font-size: 16px;
+    line-height: 1.9;
+    color: #111;
+    outline: none;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .page:focus {
+    box-shadow: 0 0 0 2px #a8c7fa, 0 4px 20px rgba(0, 0, 0, .13);
+  }
+
+  .page.exporting {
+    box-shadow: none !important;
+  }
+
+  /* ============ 正文排版 ============ */
+  .page h1.title {
+    font-family: "宋体", SimSun, serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 4px;
+    text-align: center;
+    margin: 0 0 30px;
+    text-indent: 0;
+  }
+
+  .page p {
+    margin: 0 0 10px;
+    text-indent: 2em;
+    text-align: justify;
+  }
+
+  .page p.no-indent {
+    text-indent: 0;
+  }
+
+  /* PDF 分页时避免切断段落与签名表 */
+  .page p,
+  .page table.sign-table {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* ============ 落款签名区 ============ */
+  table.sign-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 52px;
+    text-indent: 0;
+  }
+
+  table.sign-table td {
+    width: 50%;
+    vertical-align: top;
+    padding: 0 8px 0 0;
+  }
+
+  table.sign-table p {
+    text-indent: 0;
+    margin: 0 0 24px;
+  }
+
+  /* ============ 打印样式 ============ */
+  @page {
+    size: A4 portrait;
+    margin: 20mm 25mm;
+  }
+
+  @media print {
+    html, body {
+      background: #fff !important;
+    }
+
+    .toolbar {
+      display: none !important;
+    }
+
+    .page-wrap {
+      padding: 0;
+      margin: 0;
+    }
+
+    .page {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      box-shadow: none !important;
+      font-size: 12pt;
+      line-height: 1.8;
+    }
+
+    .page:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    .page h1.title {
+      font-size: 18pt;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 工具栏 ================= -->
+<div class="toolbar">
+  <button onclick="exportWord()">下载 Word</button>
+  <button onclick="exportPDF()">下载 PDF</button>
+  <button class="ghost" onclick="doPrint()">打印预览 / 打印</button>
+  <div class="tip">正文内容可直接点击修改，修改后再导出或打印</div>
+</div>
+
+<!-- ================= A4 纸张 ================= -->
+<div class="page-wrap">
+  <div class="page" id="paper" contenteditable="true" spellcheck="false">
+
+    <h1 class="title">道路施工协议</h1>
+
+    <p class="no-indent">甲方：唐山市路北区市政设施服务所</p>
+    <p class="no-indent">乙方：XXXXXXXXXXXXXXXXXXXXXXXXX</p>
+
+    <p>为创建和谐、美好的城市环境，确保城市道路设施的完好和功能的正常发挥，就相关事宜，特订立本协议：</p>
+
+    <p>一、挖掘、占用时间及路段。乙方将于202X年X月X日至202X年X月X日在（挖掘路段）热力管线开挖施工。</p>
+
+    <p>二、乙方须严格按照唐山市《市政工程工地扬尘治理强化措施实施办法》的通知要求，采用标准的围挡设施对施工范围进行围蔽作业，并设立相关的安全警示等标识。工程竣工后，乙方应负责恢复因搭建围挡而造成破损的便道、机动车道以及围挡以内路面的市政设施。</p>
+
+    <p>三、严禁拉链式开挖，一旦出现拉链式开挖情况，需对路段进行整板恢复。乙方在恢复路面时，需提前通知市政设施服务所相关负责人，并按照原道路基础结构进行施工，以恢复原貌。施工结束后，务必确保道路交通指示标志及周边市政设施完整好用、干净整洁。</p>
+
+    <p>四、若因极端天气、自然灾害等不可抗拒的因素，或者因乙方作业不规范、安全防护设施不到位等原因，导致通行人员、周边车辆、乙方施工人员等任何一方遭受人身伤害或财产损失的，均由乙方承担一切赔偿责任。</p>
+
+    <p>五、乙方竣工后，甲、乙双方应共同对道路进行现场检查。若造成机动车道、自行车道、人行道或市政设施损坏的，由乙方支付相应的维修费用或恢复至设施原貌。工程质量保质期为自竣工验收合格之日起24个月。在质保期内，若出现任何因工程质量问题导致的机动车道、自行车道、人行道或市政设施损坏，以及其他与本工程相关的问题，均由乙方负责维修或恢复，并承担相应费用。</p>
+
+    <p>六、其他未尽事宜，双方应本着友好协商的原则进行解决。协商不成的，可向工程所在地的人民法院进行诉讼。</p>
+
+    <p>七、本协议一式四份，甲、乙双方各两份。</p>
+
+    <table class="sign-table">
+      <tr>
+        <td>
+          <p>甲方（盖章）：</p>
+          <p>代表（签字）：</p>
+          <p>年　　月　　日：</p>
+        </td>
+        <td>
+          <p>乙方（盖章）：</p>
+          <p>代表（签字）：</p>
+          <p>年　　月　　日：</p>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+<script>
+/* ================= 下载 Word ================= */
+function exportWord() {
+  var source = document.getElementById('paper');
+
+  var clone = source.cloneNode(true);
+  clone.removeAttribute('contenteditable');
+  clone.removeAttribute('spellcheck');
+  clone.classList.remove('exporting');
+
+  var content = clone.innerHTML;
+
+  var html =
+    '<html xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+    'xmlns:w="urn:schemas-microsoft-com:office:word" ' +
+    'xmlns="http://www.w3.org/TR/REC-html40">' +
+    '<head><meta charset="utf-8"><title>道路施工协议</title>' +
+    '<!--[if gte mso 9]><xml><w:WordDocument>' +
+    '<w:View>Print</w:View><w:Zoom>100</w:Zoom>' +
+    '</w:WordDocument></xml><![endif]-->' +
+    '<style>' +
+    '@page WordSection1 { size: 210mm 297mm; margin: 20mm 25mm 20mm 25mm; }' +
+    'div.WordSection1 { page: WordSection1; }' +
+    'body { font-family: "宋体", SimSun, serif; font-size: 12pt; line-height: 1.8; color: #000; }' +
+    'h1.title { font-family: "宋体", SimSun, serif; font-size: 18pt; font-weight: bold; ' +
+    '  text-align: center; letter-spacing: 4pt; margin: 0 0 22pt 0; text-indent: 0; }' +
+    'p { margin: 0 0 7pt 0; text-indent: 2em; text-align: justify; line-height: 1.8; }' +
+    'p.no-indent { text-indent: 0; }' +
+    'table.sign-table { width: 100%; border-collapse: collapse; margin-top: 36pt; }' +
+    'table.sign-table td { width: 50%; vertical-align: top; padding: 0; }' +
+    'table.sign-table p { text-indent: 0; margin: 0 0 18pt 0; }' +
+    '</style></head><body><div class="WordSection1">' + content +
+    '</div></body></html>';
+
+  var blob = new Blob(['\ufeff', html], { type: 'application/msword;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = '道路施工协议.doc';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+}
+
+/* ================= 下载 PDF ================= */
+function exportPDF() {
+  // 修正 1：导出前清除文字选区，避免高亮被截进 PDF
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges();
+  }
+  if (document.activeElement && document.activeElement.blur) {
+    document.activeElement.blur();
+  }
+
+  if (typeof html2pdf === 'undefined') {
+    alert('PDF 组件未加载成功（可能无网络）。\n请点击“打印预览 / 打印”，在目标打印机中选择“另存为 PDF”。');
+    return;
+  }
+
+  var paper = document.getElementById('paper');
+  paper.classList.add('exporting');
+
+  var opt = {
+    margin: 0,
+    filename: '道路施工协议.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: paper.scrollWidth
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+
+  html2pdf().set(opt).from(paper).save()
+    .then(function () {
+      paper.classList.remove('exporting');
+    })
+    .catch(function () {
+      paper.classList.remove('exporting');
+      alert('PDF 生成失败，请改用“打印预览 / 打印”中的“另存为 PDF”。');
+    });
+}
+
+/* ================= 打印 / 打印预览 ================= */
+function doPrint() {
+  // 修正 2：打印前清除选区并失焦，避免光标/高亮被打印
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges();
+  }
+  if (document.activeElement && document.activeElement.blur) {
+    document.activeElement.blur();
+  }
+  window.print();
+}
+</script>
+
+</body>
+</html>
